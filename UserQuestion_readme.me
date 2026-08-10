@@ -1,0 +1,117 @@
+# 2026 Real-World Demo Questions and Follow-Ups
+
+These questions are designed for `real_company_exposure_2026.csv`. Impact questions should use the full market-analysis workflow. Product/ticker/region/raw-material questions should use direct table lookup and return only the requested value.
+
+## News 01 — Lithium rebound and battery-storage demand
+### Set 1 — Whole portfolio
+- User: Analyze the impact of this lithium news on all configured companies.
+- Follow-up: Which companies are most exposed to lithium or battery-storage demand?
+- Follow-up: Now explain Tesla, Inc. only.
+- Follow-up: What products of Tesla are present in our list?
+### Set 2 — Albemarle
+- User: Analyze Albemarle Corporation only based on this news.
+- Follow-up: Why could Albemarle be affected by stronger lithium prices?
+- Follow-up: What products of Albemarle are present in our list?
+- Follow-up: What is its ticker?
+- Follow-up: What is its region?
+### Set 3 — Tesla
+- User: Analyze Tesla, Inc. only based on this lithium news.
+- Follow-up: Why can the same news have both a cost risk and a storage-demand benefit for Tesla?
+- Follow-up: What raw materials or drivers are configured for Tesla?
+- Follow-up: What is its exposure type?
+### Set 4 — Direct master-data test
+- User: Give me unique company names present in our list.
+- Follow-up: What is the ticker of Tesla, Inc.?
+- Follow-up: What industry is Albemarle Corporation in?
+- Follow-up: What products of Albemarle are present in our list?
+
+## News 02 — AI-chip demand and export controls
+### Set 1 — Whole portfolio
+- User: Analyze the impact of this AI semiconductor news on all configured companies.
+- Follow-up: Which configured companies have direct AI-chip exposure?
+- Follow-up: Analyze NVIDIA Corporation only.
+- Follow-up: What products of NVIDIA are present in our list?
+### Set 2 — NVIDIA
+- User: How could strong AI demand and tighter export controls affect NVIDIA Corporation?
+- Follow-up: Explain the negative regulatory driver only.
+- Follow-up: What raw materials or drivers are configured for NVIDIA?
+- Follow-up: What is NVIDIA's ticker?
+### Set 3 — TSMC
+- User: Analyze Taiwan Semiconductor Manufacturing Company Limited only.
+- Follow-up: Why is advanced AI demand relevant to TSMC?
+- Follow-up: What products of TSMC are in our table?
+- Follow-up: What is its region?
+### Set 4 — Compare company exposure
+- User: Compare the impact of this news on NVIDIA Corporation and Taiwan Semiconductor Manufacturing Company Limited.
+- Follow-up: Explain NVIDIA only.
+- Follow-up: What are the tickers of NVIDIA Corporation and Taiwan Semiconductor Manufacturing Company Limited?
+- Follow-up: What industries are configured for TSMC?
+
+## News 03 — Strait of Hormuz oil-supply risk
+### Set 1 — Energy versus airline
+- User: Analyze the impact of this oil-supply news on Exxon Mobil Corporation and Delta Air Lines, Inc.
+- Follow-up: Why can the same oil-price event affect these two companies in opposite directions?
+- Follow-up: Analyze Delta Air Lines, Inc. only.
+- Follow-up: What raw material or driver is configured for Delta?
+### Set 2 — ExxonMobil
+- User: Analyze Exxon Mobil Corporation only based on this news.
+- Follow-up: Why could higher crude-oil prices be favorable for its upstream business?
+- Follow-up: What products are configured for ExxonMobil?
+- Follow-up: What is its ticker?
+### Set 3 — Delta
+- User: Analyze Delta Air Lines, Inc. only based on this news.
+- Follow-up: Why does jet-fuel pricing matter for Delta?
+- Follow-up: What products of Delta are present in our list?
+- Follow-up: What is its region?
+### Set 4 — Whole portfolio
+- User: Analyze all configured companies based on this Hormuz news.
+- Follow-up: Analyze Exxon Mobil Corporation only.
+- Follow-up: Now analyze Delta Air Lines, Inc. only.
+- Follow-up: Give me the ticker of Delta Air Lines, Inc.
+
+## News 04 — Federal Reserve rates, inflation and jobs
+### Set 1 — Financial sector
+- User: Analyze the impact of this macro news on JPMorgan Chase & Co. and Visa Inc.
+- Follow-up: Why is the impact on JPMorgan not simply positive when rates are high?
+- Follow-up: Analyze Visa Inc. only.
+- Follow-up: What drivers are configured for Visa?
+### Set 2 — JPMorgan
+- User: Analyze JPMorgan Chase & Co. only based on this Fed and jobs news.
+- Follow-up: Explain how interest rates and labor-market weakness create opposing risks.
+- Follow-up: What products of JPMorgan are present in our list?
+- Follow-up: What is its ticker?
+### Set 3 — Visa
+- User: Analyze Visa Inc. only based on this news.
+- Follow-up: How could weaker consumer spending affect Visa?
+- Follow-up: What is Visa's industry?
+- Follow-up: What is its region?
+### Set 4 — Direct table questions
+- User: What is the ticker of JPMorgan Chase & Co.?
+- Follow-up: What product is configured for Visa Inc.?
+- Follow-up: What is Visa's region?
+- Follow-up: What exposure type is configured for Visa Inc.?
+
+## News 05 — U.S. steel/aluminum/copper tariff adjustment
+### Set 1 — Nucor versus Ford
+- User: Analyze the impact of this tariff news on Nucor Corporation and Ford Motor Company.
+- Follow-up: Why can lower derivative-product tariffs affect a steel producer and an automaker differently?
+- Follow-up: Analyze Nucor Corporation only.
+- Follow-up: What driver is configured for Nucor?
+### Set 2 — Ford
+- User: Analyze Ford Motor Company only based on this news.
+- Follow-up: How can metal tariffs affect vehicle manufacturing costs?
+- Follow-up: What raw materials or drivers are configured for Ford?
+- Follow-up: What is Ford's ticker?
+### Set 3 — Nucor
+- User: Analyze Nucor Corporation only based on this tariff adjustment.
+- Follow-up: Why are steel import tariffs relevant to a domestic steel producer?
+- Follow-up: What products of Nucor are present in our list?
+- Follow-up: What is its region?
+### Set 4 — Portfolio filter
+- User: Analyze all companies based on this tariff news.
+- Follow-up: Compare Nucor Corporation and Ford Motor Company only.
+- Follow-up: Analyze Ford Motor Company only.
+- Follow-up: Give me the ticker of Nucor Corporation.
+
+## Testing note
+The exact direction and score can vary because event extraction is performed by an LLM. The `sensitivity` and `exposure_weight` values in this demo dataset are configuration assumptions, not reported company forecasts. Use these questions to validate routing, grounding, follow-up memory, direct-table lookup and explainability rather than investment performance.

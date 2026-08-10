@@ -1,0 +1,42 @@
+GIT PUSH — COMPLETE 2026 VERSION
+
+From the project root:
+
+1) Check changes
+   git status
+
+2) Stage all intended changes
+   git add .
+
+3) Review what is staged
+   git status
+
+4) Commit
+   git commit -m "Update complete 2026 market intelligence chatbot with multi-file exposure loading"
+
+5) Push
+   git push origin main
+
+If main is not tracking origin/main yet:
+   git branch -M main
+   git push -u origin main
+
+DO NOT COMMIT:
+- .env
+- .streamlit/secrets.toml
+- OpenRouter API keys
+- Hugging Face tokens
+
+STREAMLIT CLOUD SECRETS:
+OPENROUTER_API_KEY = "..."
+HF_TOKEN = "..."
+
+MULTIPLE EXPOSURE INPUT FILES:
+config/settings.yaml
+
+paths:
+  company_exposure_csv:
+    - data/company_exposure_2026_part1.xlsx
+    - data/company_exposure_2026_part2.xlsx
+
+The application combines both files automatically on startup.

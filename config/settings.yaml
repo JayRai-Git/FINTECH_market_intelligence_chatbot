@@ -1,0 +1,277 @@
+app:
+  name: AI Market Intelligence Chatbot
+  page_title: AI Market Intelligence
+  page_icon: 📈
+  disclaimer: Research signal only. This application does not provide investment advice, execute trades, or guarantee future prices.
+paths:
+  company_exposure_csv:
+  - data/company_exposure_2026_part1.xlsx
+  - data/company_exposure_2026_part2.xlsx
+  logs_root: logs
+llm:
+  provider: openrouter
+  openrouter_base_url: https://openrouter.ai/api/v1
+  primary_model: openai/gpt-oss-20b:free
+  fallback_model: openrouter/free
+  temperature: 0.0
+  max_tokens: 1100
+  judge_max_tokens: 700
+  timeout_seconds: 35
+  use_json_response_format: true
+  app_url_header: http://localhost:8501
+  app_title_header: AI Market Intelligence Chatbot
+  local_hf_fallback_enabled: false
+  local_hf_model: google/flan-t5-small
+  local_hf_max_new_tokens: 900
+embeddings:
+  model_name: sentence-transformers/all-MiniLM-L6-v2
+  normalize_embeddings: true
+  top_k_exposures: 30
+  semantic_match_threshold: 0.28
+analysis:
+  direction_up_threshold: 0.15
+  direction_down_threshold: -0.15
+  confidence_floor: 0.1
+  confidence_ceiling: 0.95
+  max_news_characters: 50000
+  score_clip_min: -1.0
+  score_clip_max: 1.0
+  reason_min_words: 200
+  reason_max_words: 220
+  summary_max_words: 90
+  max_key_market_points: 5
+  company_name_fuzzy_threshold: 0.72
+  reuse_previous_company_filter_for_followups: true
+conversation:
+  initial_analysis_query: Analyze all configured companies based on this attached news.
+  missing_news_message: No input news is attached. Please attach the related news.
+  chat_placeholder: Ask a follow-up, e.g. 'Analyze Tesla, Inc. only' or 'Why is Delta impacted?'
+  all_company_markers:
+  - all company
+  - all companies
+  - overall
+  - every company
+  - entire group
+  followup_markers:
+  - why
+  - how
+  - explain
+  - more detail
+  - what about it
+  - what are the risks
+  - what is the reason
+  - why so
+  - tell me more
+  - and why
+  - impact reason
+  generic_company_tokens:
+  - inc
+  - incorporated
+  - corporation
+  - corp
+  - co
+  - company
+  - limited
+  - ltd
+  - group
+  - the
+  - please
+  - analyze
+  - only
+table_lookup:
+  enabled: true
+  fuzzy_token_threshold: 0.82
+  global_scope_markers:
+  - our list
+  - in the list
+  - entire list
+  - all records
+  - all companies
+  - unique
+  - present in
+  - available in
+  - configured list
+  - company table
+  - master table
+  fields:
+    company_name:
+      output_column: company
+      keywords:
+      - company name
+      - company names
+      - names of companies
+      - list of companies
+      - company list
+    product:
+      output_column: product
+      keywords:
+      - product
+      - products
+    ticker:
+      output_column: ticker
+      keywords:
+      - ticker
+      - code
+      - symbol
+    trading_name:
+      output_column: trading_name
+      keywords:
+      - trading name
+      - trade name
+    industry:
+      output_column: industry
+      keywords:
+      - industry
+      - sector
+    region:
+      output_column: region
+      keywords:
+      - region
+      - location
+    raw_material:
+      output_column: material_or_driver
+      keywords:
+      - raw material
+      - raw materials
+      - material
+      - materials
+      - input
+      - inputs
+      - driver
+      - drivers
+      - material or driver
+      - materials or drivers
+    exposure_type:
+      output_column: exposure_type
+      keywords:
+      - exposure type
+      - consumer or producer
+    usage_reason:
+      output_column: usage_reason
+      keywords:
+      - usage reason
+      - use reason
+      - why used
+      - why using
+    sensitivity:
+      output_column: sensitivity
+      keywords:
+      - sensitivity
+    exposure_weight:
+      output_column: exposure_weight
+      keywords:
+      - exposure weight
+      - weight
+output:
+  impact_labels:
+    UP: INCREASE
+    DOWN: DECREASE
+    NEUTRAL: NEUTRAL
+  investment_suggestions:
+    UP: POSITIVE WATCH
+    DOWN: CAUTION / NEGATIVE WATCH
+    NEUTRAL: NEUTRAL / MONITOR
+  table_columns:
+  - Ticker / Code
+  - Company Name
+  - Impact Direction
+  - Investment Suggestion
+  - Impact Score
+  - Confidence
+  - Company Impacted Product
+  - Reason Behind Impact
+security:
+  url_timeout_seconds: 20
+  max_url_bytes: 3000000
+  max_redirects: 5
+  max_user_query_characters: 1200
+  investment_advice_markers:
+  - \bshould i buy\b
+  - \bshould i sell\b
+  - \bguarantee(?:d)?\b
+  - \brisk[- ]?free\b
+  - \bexact target price\b
+  allowed_schemes:
+  - http
+  - https
+  blocked_hostnames:
+  - localhost
+  - localhost.localdomain
+  blocked_ip_networks:
+  - 127.0.0.0/8
+  - 10.0.0.0/8
+  - 172.16.0.0/12
+  - 192.168.0.0/16
+  - 169.254.0.0/16
+  - ::1/128
+  - fc00::/7
+  - fe80::/10
+  prompt_injection_markers:
+  - ignore previous instructions
+  - ignore all previous instructions
+  - system prompt
+  - developer message
+  - reveal your prompt
+  - act as system
+  - override instructions
+  prohibited_output_claims:
+  - guaranteed profit
+  - guaranteed return
+  - risk free
+  - risk-free
+  - definitely buy
+  - definitely sell
+  - 100% certain
+logging:
+  folder_prefix: logs_
+  timestamp_format: '%Y%m%d_%H%M%S_%f'
+  store_source_text: false
+  source_excerpt_characters: 500
+judge:
+  enabled: true
+  strategy: deterministic_first
+  llm_escalation_score_below: 75
+  dimensions:
+  - grounding
+  - relevance
+  - causal_reasoning
+  - format_compliance
+  - safety
+  - uncertainty_calibration
+  max_dimension_score: 5
+  passing_score: 75
+ui:
+  max_upload_mb: 10
+  supported_upload_extensions:
+  - pdf
+  - docx
+  - csv
+  - json
+  - txt
+  - md
+  table_row_height: 42
+  table_header_height: 42
+  table_min_height: 90
+  table_max_height: 560
+  reason_column_width: large
+  key_points_column_width: large
+credentials:
+  openrouter_env_var: OPENROUTER_API_KEY
+  hf_env_var: HF_TOKEN
+  require_both_for_analysis: true
+  sidebar_title: API tokens
+  openrouter_label: OpenRouter API Token
+  hf_label: Hugging Face Token
+  openrouter_placeholder: Enter OpenRouter token
+  hf_placeholder: Enter Hugging Face token
+  openrouter_configured_message: 'OpenRouter token: configured'
+  hf_configured_message: 'Hugging Face token: configured'
+  apply_button: Apply tokens
+  success_message: Token check succeeded.
+  failure_message: Token check failed.
+  missing_help_message: Enter the missing OpenRouter and/or Hugging Face token above.
+  analysis_blocked_message: Token check failed. Please provide both OpenRouter and Hugging Face tokens in the sidebar before running market-impact analysis.
+  runtime_note: Sidebar tokens are kept only in the current app process and are not written back to .env.
+exposure_data:
+  excel_sheet_name: Company Exposure
+  deduplicate_rows: true

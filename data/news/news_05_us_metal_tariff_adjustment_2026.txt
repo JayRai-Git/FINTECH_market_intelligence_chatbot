@@ -1,0 +1,15 @@
+DEMO NEWS BRIEF — U.S. ADJUSTS STEEL, ALUMINUM AND COPPER DERIVATIVE TARIFF RULES
+Date context: April 2, 2026
+
+This is a synthesized demo brief based on public 2026 reporting. It is not a verbatim reproduction of any article.
+
+The United States adjusted its Section 232 tariff framework for steel, aluminum and copper derivative products in April 2026. Reuters reported that the government maintained a 50% import tariff on commodity steel, aluminum and copper, while changing how duties apply to many downstream derivative products.
+
+Under the revised framework described by Reuters, derivative goods containing less than 15% of the covered metals by weight no longer face the previous 50% derivative-product duty. Products with more than 15% covered-metal content generally face a 25% tariff on the full import value, while selected metal-intensive industrial and grid equipment receives a reduced 15% rate through 2027. Products made abroad entirely from U.S.-origin steel, aluminum or copper can qualify for a lower rate.
+
+The policy is intended to simplify compliance while preserving significant protection for commodity-metal imports. This creates different effects across the value chain. Domestic steel producers continue to operate behind substantial tariff protection on imported commodity steel, but reductions on some derivative products may modestly reduce protection for certain downstream categories. Manufacturers that consume imported steel, aluminum, copper or metal-intensive components may see lower tariff costs on qualifying derivative products, although commodity metal imports remain heavily tariffed.
+
+The impact on any individual company depends on domestic-versus-imported sourcing, metal content, contract terms, product mix and the ability to pass costs through to customers. The policy therefore provides a useful real-world test of opposite exposures between a domestic steel producer and an automotive manufacturer that purchases large quantities of metal and components.
+
+Source reference:
+https://www.reuters.com/world/us/trump-cuts-us-duty-rates-steel-aluminum-copper-derivative-products-2026-04-02/

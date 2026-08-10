@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="AI Market Intelligence Chatbot - news-driven company, product, raw-material and market-impact analysis."
+  />
+  <title>AI Market Intelligence Chatbot</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">CLIENT DEMO · AI MARKET INTELLIGENCE</div>
+      <h1>News-to-Market Impact Intelligence</h1>
+      <p class="hero-copy">
+        A LangGraph and Streamlit application that analyzes uploaded news or
+        public URLs, maps events to company products and raw-material exposure,
+        and generates explainable market-impact research signals.
+      </p>
+
+      <div class="actions">
+        <a class="button primary" href="__STREAMLIT_DEMO_URL__" target="_blank" rel="noopener noreferrer">
+          Launch Live Demo
+        </a>
+        <a class="button secondary" href="__REPOSITORY_URL__" target="_blank" rel="noopener noreferrer">
+          View Source Code
+        </a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What the demo shows</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>News Intelligence</h3>
+          <p>Upload a news file or provide a URL and extract key market drivers and event context.</p>
+        </article>
+        <article class="card">
+          <h3>Company Exposure</h3>
+          <p>Connect companies, products, regions and raw-material dependencies to the news event.</p>
+        </article>
+        <article class="card">
+          <h3>Impact Signals</h3>
+          <p>Generate INCREASE, DECREASE or NEUTRAL research signals with impact score and confidence.</p>
+        </article>
+        <article class="card">
+          <h3>Conversational Follow-ups</h3>
+          <p>Ask company-specific questions or retrieve direct master-table values without rerunning the full report.</p>
+        </article>
+        <article class="card">
+          <h3>Guardrails & Evaluation</h3>
+          <p>Apply input/output guardrails and response-quality evaluation with optional LLM-as-Judge escalation.</p>
+        </article>
+        <article class="card">
+          <h3>Traceability</h3>
+          <p>Store execution logs and evaluation details for each analysis run.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel architecture">
+      <h2>High-level workflow</h2>
+      <div class="flow">
+        <span>News / URL</span>
+        <b>→</b>
+        <span>Guardrails</span>
+        <b>→</b>
+        <span>LangGraph</span>
+        <b>→</b>
+        <span>Exposure Engine</span>
+        <b>→</b>
+        <span>Impact Report</span>
+        <b>→</b>
+        <span>Evaluation</span>
+      </div>
+    </section>
+
+    <section class="panel notice">
+      <h2>Research demonstration</h2>
+      <p>
+        The application generates research-oriented directional signals. It does
+        not guarantee future stock-price movement and is not a substitute for
+        regulated investment advice or independent financial analysis.
+      </p>
+    </section>
+
+    <footer>
+      <span>Repository: __REPOSITORY_NAME__</span>
+      <span>Built with Python · LangGraph · Streamlit</span>
+    </footer>
+  </main>
+</body>
+</html>

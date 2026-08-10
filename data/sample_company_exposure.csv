@@ -1,0 +1,17 @@
+parent_company,company,trading_name,ticker,industry,region,product,exposure_type,material_or_driver,usage_reason,sensitivity,exposure_weight
+XYZ Group,XYZ Battery Materials Ltd,XYZ Battery Materials,XYZMAT,Battery Materials,Asia-Pacific,Lithium chemicals,producer,Lithium carbonate,Produces and sells lithium chemicals used in rechargeable battery cathode supply chains,1.0,0.90
+XYZ Group,XYZ Battery Materials Ltd,XYZ Battery Materials,XYZMAT,Battery Materials,Asia-Pacific,Lithium chemicals,producer,Lithium,Primary revenue exposure to lithium-linked selling prices,1.0,0.85
+XYZ Group,XYZ EV Systems Ltd,XYZ EV Systems,XYZEV,Automotive,North America,EV battery packs,consumer,Lithium carbonate,Key battery-cell input whose price affects pack procurement and manufacturing cost,-1.0,0.90
+XYZ Group,XYZ EV Systems Ltd,XYZ EV Systems,XYZEV,Automotive,North America,Electric vehicles,consumer,Lithium,Battery raw-material exposure can affect vehicle gross margin and pricing,-0.9,0.80
+XYZ Group,XYZ Electronics Ltd,XYZ Electronics,XYZELEC,Electronics,Asia-Pacific,Consumer electronics,consumer,Semiconductors,Uses chips for devices and embedded control systems,-0.6,0.65
+XYZ Group,XYZ Electronics Ltd,XYZ Electronics,XYZELEC,Electronics,Asia-Pacific,Consumer electronics,consumer,Copper,Used in wiring connectors boards and power components,-0.3,0.35
+XYZ Group,XYZ Airline Services Ltd,XYZ Airline Services,XYZAIR,Aviation,India,Passenger aviation,consumer,Crude oil,Jet fuel is a major operating-cost exposure linked to crude oil prices,-1.0,0.90
+XYZ Group,XYZ Chemicals Ltd,XYZ Chemicals,XYZCHEM,Chemicals,Europe,Industrial chemicals,consumer,Natural gas,Natural gas is both a process-energy input and chemical feedstock,-0.8,0.75
+XYZ Group,XYZ Steel Products Ltd,XYZ Steel Products,XYZSTL,Metals,India,Steel products,consumer,Iron ore,Principal raw material for steelmaking,-0.8,0.80
+XYZ Group,XYZ Steel Products Ltd,XYZ Steel Products,XYZSTL,Metals,India,Steel products,consumer,Coking coal,Blast-furnace and metallurgical input,-0.7,0.70
+XYZ Group,XYZ Foods Ltd,XYZ Foods,XYZFOOD,Consumer Staples,India,Packaged foods,consumer,Wheat,Core ingredient and commodity input for selected food products,-0.8,0.70
+XYZ Group,XYZ Foods Ltd,XYZ Foods,XYZFOOD,Consumer Staples,India,Packaged foods,consumer,Crude oil,Indirect exposure through packaging transport and logistics costs,-0.3,0.35
+XYZ Group,XYZ Payments Ltd,XYZ Payments,XYZPAY,FinTech,India,Digital payments,consumer,Interest rates,Higher rates can influence transaction activity funding conditions and valuation assumptions,-0.3,0.45
+XYZ Group,XYZ Lending Ltd,XYZ Lending,XYZLEND,FinTech,India,Consumer lending,mixed,Interest rates,Rates affect funding cost borrower affordability credit demand and net interest dynamics,-0.4,0.70
+XYZ Group,XYZ Renewable Power Ltd,XYZ Renewable Power,XYZREN,Renewable Energy,India,Solar power,consumer,Polysilicon,Module procurement costs are influenced by photovoltaic supply-chain input pricing,-0.6,0.55
+XYZ Group,XYZ Renewable Power Ltd,XYZ Renewable Power,XYZREN,Renewable Energy,India,Battery storage,consumer,Lithium carbonate,Grid storage procurement can be affected by lithium battery input costs,-0.5,0.40

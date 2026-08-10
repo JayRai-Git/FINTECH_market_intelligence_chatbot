@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Runtime logs
+logs/*
+!logs/.gitkeep
+
+# Streamlit / OS
+.streamlit/
+.DS_Store

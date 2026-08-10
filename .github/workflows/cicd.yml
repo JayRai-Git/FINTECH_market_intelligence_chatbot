@@ -1,0 +1,222 @@
+name: AI Market Intelligence CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+# Prevent multiple deployments for the same branch from running together.
+concurrency:
+  group: ai-market-intelligence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  # ============================================================
+  # CI
+  # Validate Python + Streamlit application
+  # ============================================================
+  test:
+    name: Test Streamlit Application
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+
+      # --------------------------------------------------------
+      # 1. Checkout repository
+      # Repository:
+      # JayRai-Git/FINTECH_market_intelligence_chatbot
+      # --------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --------------------------------------------------------
+      # 2. Configure Python
+      # --------------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+
+      # --------------------------------------------------------
+      # 3. Validate Python syntax
+      # --------------------------------------------------------
+      - name: Compile Python source
+        run: |
+          python -m compileall -q app.py src
+
+      # --------------------------------------------------------
+      # 4. Run Streamlit smoke test + pytest tests
+      #
+      # streamlit-app-action installs requirements.txt,
+      # performs a Streamlit AppTest smoke test,
+      # and executes pytest tests in the repository.
+      # --------------------------------------------------------
+      - name: Run Streamlit smoke tests and pytest suite
+        uses: streamlit/streamlit-app-action@v0.0.3
+        with:
+          app-path: app.py
+
+
+  # ============================================================
+  # CD - BUILD GITHUB PAGES
+  #
+  # This builds the static client showcase contained in /docs.
+  #
+  # Important:
+  # The actual Python Streamlit application is deployed separately
+  # by Streamlit Community Cloud from the same GitHub repository.
+  # ============================================================
+  build-pages:
+    name: Build GitHub Pages Showcase
+
+    # Do not deploy GitHub Pages for pull requests.
+    if: github.event_name != 'pull_request'
+
+    needs:
+      - test
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+
+      # --------------------------------------------------------
+      # 1. Checkout repository
+      # --------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      # --------------------------------------------------------
+      # 2. Prepare links in docs/index.html
+      #
+      # GitHub repository:
+      # https://github.com/JayRai-Git/FINTECH_market_intelligence_chatbot
+      #
+      # STREAMLIT_DEMO_URL comes from:
+      #
+      # GitHub
+      #   Settings
+      #     Secrets and variables
+      #       Actions
+      #         Variables
+      #
+      # Variable name:
+      # STREAMLIT_DEMO_URL
+      # --------------------------------------------------------
+      - name: Prepare client showcase links
+        env:
+          STREAMLIT_DEMO_URL: ${{ vars.STREAMLIT_DEMO_URL }}
+          REPOSITORY_URL: https://github.com/JayRai-Git/FINTECH_market_intelligence_chatbot
+          REPOSITORY_NAME: FINTECH_market_intelligence_chatbot
+
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          page = Path("docs/index.html")
+
+          if not page.exists():
+              raise FileNotFoundError(
+                  "docs/index.html was not found. "
+                  "GitHub Pages showcase cannot be built."
+              )
+
+          text = page.read_text(encoding="utf-8")
+
+          repository_url = os.environ["REPOSITORY_URL"]
+          repository_name = os.environ["REPOSITORY_NAME"]
+
+          streamlit_demo_url = (
+              os.environ.get("STREAMLIT_DEMO_URL") or ""
+          ).strip()
+
+          # If Streamlit URL has not been configured yet,
+          # use GitHub repository URL instead of generating
+          # a broken Launch Demo link.
+          if not streamlit_demo_url:
+              streamlit_demo_url = repository_url
+
+          text = text.replace(
+              "__STREAMLIT_DEMO_URL__",
+              streamlit_demo_url,
+          )
+
+          text = text.replace(
+              "__REPOSITORY_URL__",
+              repository_url,
+          )
+
+          text = text.replace(
+              "__REPOSITORY_NAME__",
+              repository_name,
+          )
+
+          page.write_text(
+              text,
+              encoding="utf-8",
+          )
+
+          print("GitHub Pages links configured successfully.")
+          print(f"Repository: {repository_url}")
+          print(f"Streamlit demo: {streamlit_demo_url}")
+          PY
+
+      # --------------------------------------------------------
+      # 3. Configure GitHub Pages
+      # --------------------------------------------------------
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # --------------------------------------------------------
+      # 4. Upload /docs as GitHub Pages artifact
+      # --------------------------------------------------------
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+
+
+  # ============================================================
+  # CD - DEPLOY GITHUB PAGES
+  # ============================================================
+  deploy-pages:
+    name: Deploy GitHub Pages Showcase
+
+    if: github.event_name != 'pull_request'
+
+    needs:
+      - build-pages
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+
+      # --------------------------------------------------------
+      # Deploy the previously generated Pages artifact
+      # --------------------------------------------------------
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

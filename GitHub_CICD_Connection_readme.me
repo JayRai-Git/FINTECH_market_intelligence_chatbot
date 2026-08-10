@@ -1,0 +1,230 @@
+# GitHub CI/CD + Client Demo Deployment
+
+This deployment setup intentionally leaves the existing chatbot Python/business
+logic unchanged.
+
+## Recommended architecture
+
+GitHub repository
+    |
+    +-- GitHub Actions
+    |      |
+    |      +-- Compile Python
+    |      +-- Run Streamlit smoke tests
+    |      +-- Run pytest
+    |      +-- Deploy static client showcase to GitHub Pages
+    |
+    +-- Streamlit Community Cloud
+           |
+           +-- Runs app.py
+           +-- Reads requirements.txt
+           +-- Reads OPENROUTER_API_KEY and HF_TOKEN from Streamlit Secrets
+           +-- Automatically updates after GitHub commits
+
+GitHub Pages cannot run the Python/Streamlit backend. It is used as the
+client-facing project/showcase page. The "Launch Live Demo" button opens the
+actual Streamlit app.
+
+## Files to add to the existing repository
+
+Copy these files/folders to the root of your existing project:
+
+.github/
+  workflows/
+    cicd.yml
+
+docs/
+  index.html
+  styles.css
+
+GitHub_CICD_Connection_readme.me
+
+No Python source file must be replaced for this deployment setup.
+
+## Step 1 - Push your project to GitHub
+
+From your project folder:
+
+    git init
+    git add .
+    git commit -m "Add AI market intelligence chatbot and CI/CD"
+
+Create an empty GitHub repository, then:
+
+    git branch -M main
+    git remote add origin https://github.com/<YOUR_USERNAME>/<YOUR_REPOSITORY>.git
+    git push -u origin main
+
+If `origin` already exists, do not add it again.
+
+## Step 2 - Check GitHub Actions
+
+Open:
+
+    GitHub repository
+      -> Actions
+
+Workflow:
+
+    AI Market Intelligence CI/CD
+
+For each push to `main`, CI performs:
+
+1. Checkout repository.
+2. Configure Python 3.11.
+3. Compile `app.py` and `src/`.
+4. Run Streamlit smoke testing.
+5. Run your pytest tests.
+6. If CI succeeds, package and deploy `/docs` to GitHub Pages.
+
+Pull requests run CI checks but do not publish GitHub Pages.
+
+## Step 3 - Deploy the actual chatbot to Streamlit Community Cloud
+
+Sign in to Streamlit Community Cloud with GitHub.
+
+Create an app and select:
+
+    Repository: <YOUR_USERNAME>/<YOUR_REPOSITORY>
+    Branch: main
+    Main file path: app.py
+    Python: 3.11
+
+In Advanced settings -> Secrets, add:
+
+    OPENROUTER_API_KEY = "your_openrouter_key"
+    HF_TOKEN = "your_huggingface_token"
+
+Do NOT commit these values to GitHub.
+
+After deployment, Streamlit gives you a URL similar to:
+
+    https://your-project-name.streamlit.app
+
+Open the URL and validate your chatbot.
+
+## Step 4 - Connect the live demo URL to GitHub Pages
+
+Copy the Streamlit URL.
+
+In GitHub go to:
+
+    Repository
+      -> Settings
+      -> Secrets and variables
+      -> Actions
+      -> Variables
+      -> New repository variable
+
+Create:
+
+    Name:
+    STREAMLIT_DEMO_URL
+
+    Value:
+    https://your-project-name.streamlit.app
+
+This is a repository variable, not a secret, because it is a public demo URL.
+
+## Step 5 - Enable GitHub Pages
+
+Go to:
+
+    Repository
+      -> Settings
+      -> Pages
+
+Under "Build and deployment", select:
+
+    Source: GitHub Actions
+
+Then push a small commit or manually run:
+
+    Actions
+      -> AI Market Intelligence CI/CD
+      -> Run workflow
+
+After successful deployment, GitHub shows your Pages URL, generally:
+
+    https://<YOUR_USERNAME>.github.io/<YOUR_REPOSITORY>/
+
+Give this URL to clients as the project showcase page.
+
+The "Launch Live Demo" button will send clients to the Streamlit chatbot.
+
+## Step 6 - Normal CI/CD process after setup
+
+Make code change locally:
+
+    git add .
+    git commit -m "Update market intelligence chatbot"
+    git push origin main
+
+Then automatically:
+
+    Push to GitHub
+        |
+        v
+    GitHub CI validation
+        |
+        +-- Failure -> deployment stops
+        |
+        +-- Success
+              |
+              +-- GitHub Pages showcase is updated
+              |
+              +-- Streamlit Community Cloud detects the GitHub commit
+                  and updates the live application
+
+## Security checklist
+
+Never commit:
+
+    .env
+    .streamlit/secrets.toml
+    OPENROUTER_API_KEY
+    HF_TOKEN
+
+Keep `.env` ignored by Git.
+
+For Streamlit Community Cloud, enter credentials in the Cloud Secrets UI.
+
+If your repository is public, remember that all committed source code and demo
+data are visible to anyone. Keep the repository limited to public company facts
+and synthetic/demo model parameters; never commit proprietary client data.
+
+## Client demo checklist
+
+Before sharing the Pages URL with a client:
+
+1. GitHub Actions is green.
+2. Streamlit live app opens correctly.
+3. Both OpenRouter and Hugging Face tokens are configured in Streamlit Secrets.
+4. Sidebar displays token check succeeded.
+5. Upload and URL news ingestion work.
+6. Company-specific analysis returns only that company.
+7. Direct master-data questions return only the requested value.
+8. Impact reasons remain within the configured word range.
+9. Evaluation score is visible.
+10. No secret keys appear in GitHub source or logs.
+
+## Important
+
+GitHub Pages is a static web-hosting service. It cannot execute `app.py`.
+Therefore, do not attempt to run Streamlit directly in GitHub Pages.
+
+The live application is hosted on Streamlit Community Cloud from the GitHub
+repository, while GitHub Pages provides the professional client-facing entry
+page.
+
+## Multiple company exposure files
+
+The current application can load multiple CSV/XLSX workbooks from the same setting:
+
+    paths:
+      company_exposure_csv:
+        - data/company_exposure_2026_part1.xlsx
+        - data/company_exposure_2026_part2.xlsx
+
+The two files are combined at application startup and exposed as one company-master dataset.
+After adding or removing an exposure file, commit the file plus config/settings.yaml and restart/redeploy the Streamlit app.
